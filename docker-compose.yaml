@@ -1,0 +1,32 @@
+services:
+
+app:
+  container_name: app
+  build:
+  ports:
+    - "8080:80"
+  volumes:
+    - ./html:/var/www/html  
+  depends_on:
+    - db_prod 
+  networks:
+    - inft2201_network
+
+db_prod:
+  image: postgres:18-bookworm
+  container_name: postgres_db
+  environment:
+    POSTGRES_DB: prod
+    POSTGRES_USER: user
+    POSTGRES_PASSWORD: pass
+  ports:
+    - "5432:5432"
+  volumes:
+    - ./init-prod:/docker-entrypoint-initdb.d
+  networks:
+    - inft2201_network
+
+networks:
+  inft2201_network:
+    driver: bridge    
+    name: inft2201_network
