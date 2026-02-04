@@ -1,7 +1,7 @@
 services:
 
 app:
-  container_name: app
+  container_name: php-apache-app
   build:
   ports:
     - "8080:80"
@@ -13,12 +13,12 @@ app:
     - inft2201_network
 
 db_prod:
-  image: postgres:18-bookworm
+  image: postgres:16.1
   container_name: postgres_db
   environment:
     POSTGRES_DB: prod
     POSTGRES_USER: user
-    POSTGRES_PASSWORD: pass
+    POSTGRES_PASSWORD: password
   ports:
     - "5432:5432"
   volumes:
@@ -29,4 +29,4 @@ db_prod:
 networks:
   inft2201_network:
     driver: bridge    
-    name: inft2201_network
+    # name: inft2201_network
