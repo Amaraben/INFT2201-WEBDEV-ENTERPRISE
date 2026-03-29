@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+RewriteRule ^api/mail/?$ api/mail/index.php [QSA,L]
+RewriteRule ^api/mail/([0-9]+)$ api/mail/id/index.php [QSA,L]

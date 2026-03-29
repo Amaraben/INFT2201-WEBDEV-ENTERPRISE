@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  # Web Server
+  server-web:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    volumes:
+      - "../codebase/:/var/www"
+    ports:
+      - "3000:80"
+    links:
+      - server-node
+  # Database
+  server-postgres:
+    image: postgres:15.3
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - "../codebase/sql/:/docker-entrypoint-initdb.d"      
+  server-node:
+    build: 
+      dockerfile: ./Dockerfile
+      context: ../node
+    volumes:
+      - ../node/:/usr/src/app
+      - /usr/src/app/node_modules      

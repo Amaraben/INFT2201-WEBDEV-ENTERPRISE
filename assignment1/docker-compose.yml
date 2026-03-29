@@ -1,0 +1,38 @@
+services:
+  app:
+    build: .
+    depends_on:
+      - db_prod
+      - db_test
+    environment:
+      DB_USER: user
+      DB_PASS: pass
+      DB_PROD_HOST: db_prod
+      DB_TEST_HOST: db_test
+      DB_PROD_NAME: prod
+      DB_TEST_NAME: test
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/var/www/html
+    working_dir: /var/www/html
+
+  db_prod:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: prod
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-prod:/docker-entrypoint-initdb.d
+
+  db_test:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5433:5432"
