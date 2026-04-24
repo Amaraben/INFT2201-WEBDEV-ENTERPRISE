@@ -1,0 +1,17 @@
+# version: '3.9'
+
+services:
+  api:
+    build: ./api
+    ports:
+      - "3000:3000"
+    environment:
+      # match keys in config/env.example
+      JWT_SECRET: "CHANGE_ME_BEFORE_SUBMISSION"
+      RATE_LIMIT_MAX: 5
+      RATE_LIMIT_WINDOW_SECONDS: 60
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+    working_dir: /app
+    command: ["npm", "run", "dev"]
